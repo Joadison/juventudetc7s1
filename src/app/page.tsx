@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Music, UserPlus, Flame, ChevronDown, Share2 } from "lucide-react";
+import { Calendar, Clock, MapPin, Music, UserPlus, Flame, ChevronDown, Share2, Instagram } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -425,7 +425,21 @@ export default function Home() {
               style={{ animationDelay: "0.6s" }}
             />
           </div>
-          <p className="mb-4">© 2024 - Todos os direitos reservados</p>
+          <Link
+            href="https://www.instagram.com/juventudetc7s1/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mb-4"
+          >
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-orange-500 to-red-600 hover:to-red-700 hover:from-orange-600 text-lg px-6 py-6 shadow-lg transform hover:scale-105 transition-transform"
+            >
+              <Instagram className="mr-2 h-8 w-8" /> Instagram
+            </Button>
+          </Link>
+         
+          <p className="mb-4">© 2025 - Todos os direitos reservados</p>
           <p>
             adtemplocentral7setembro1@gmail.com
             {/*  | (00) 12345-6789 */}
