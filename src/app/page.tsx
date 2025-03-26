@@ -2,56 +2,68 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Music, UserPlus, Flame, ChevronDown, Share2, Instagram } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Music,
+  UserPlus,
+  Flame,
+  ChevronDown,
+  Share2,
+  Instagram,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
-  })
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true)
+  });
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   // Event date - April 5, 2024
-  const eventDate = new Date(2025, 3, 5)
+  const eventDate = new Date(2025, 3, 5, 7, 30);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
+      setIsScrolled(window.scrollY > 100);
       if (window.scrollY > 200) {
-        setShowScrollIndicator(false)
+        setShowScrollIndicator(false);
       }
-    }
+    };
 
     const updateCountdown = () => {
-      const now = new Date()
-      const difference = eventDate.getTime() - now.getTime()
+      const now = new Date();
+      const difference = eventDate.getTime() - now.getTime();
 
       if (difference <= 0) {
-        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-        return
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
       }
 
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
-      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-      const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-      setCountdown({ days, hours, minutes, seconds })
-    }
+      setCountdown({ days, hours, minutes, seconds });
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    const countdownInterval = setInterval(updateCountdown, 1000)
-    updateCountdown()
+    window.addEventListener("scroll", handleScroll);
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-      clearInterval(countdownInterval)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+      clearInterval(countdownInterval);
+    };
+  }, []);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -60,30 +72,32 @@ export default function Home() {
           title: "Culto da Juventude - 5 de Abril",
           text: "✨ No dia 5 de abril, prepare-se para três momentos incríveis de adoração e comunhão! Não perca essa experiência transformadora. 🙌💖",
           url: window.location.href,
-        })
+        });
       } catch (error) {
-        console.log("Error sharing:", error)
+        console.log("Error sharing:", error);
       }
     } else {
       // Fallback for browsers that don't support the Web Share API
-      navigator.clipboard.writeText(window.location.href)
-      alert("Link copiado para a área de transferência!")
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copiado para a área de transferência!");
     }
-  }
+  };
 
   const scrollToEvents = () => {
-    const eventsSection = document.getElementById("events")
+    const eventsSection = document.getElementById("events");
     if (eventsSection) {
-      eventsSection.scrollIntoView({ behavior: "smooth" })
+      eventsSection.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-amber-50 to-red-50">
       {/* Floating Action Button */}
       <button
         onClick={handleShare}
-        className={`fixed bottom-6 right-6 z-50 bg-gradient-to-r from-red-600 to-orange-500 p-3 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110 ${isScrolled ? "opacity-100" : "opacity-0"}`}
+        className={`fixed bottom-6 right-6 z-50 bg-gradient-to-r from-red-600 to-orange-500 p-3 rounded-full shadow-lg transform transition-all duration-300 hover:scale-110 ${
+          isScrolled ? "opacity-100" : "opacity-0"
+        }`}
         aria-label="Compartilhar"
       >
         <Share2 className="h-6 w-6 text-white" />
@@ -114,25 +128,38 @@ export default function Home() {
             Culto da Juventude
           </h1>
           <p className="text-xl md:text-2xl text-red-600 mb-8">
-          ✨ No dia 5 de abril, prepare-se para três momentos incríveis de <span className="font-bold">adoração</span> e <span className="font-bold">comunhão</span>! Não perca essa experiência transformadora. 🙌💖
+            ✨ No dia 5 de abril, prepare-se para três momentos incríveis de{" "}
+            <span className="font-bold">adoração</span> e{" "}
+            <span className="font-bold">comunhão</span>! Não perca essa
+            experiência transformadora. 🙌💖
           </p>
           <div className="mb-10">
-            <h3 className="text-xl font-semibold text-red-700 mb-4">Contagem Regressiva</h3>
+            <h3 className="text-xl font-semibold text-red-700 mb-4">
+              Contagem Regressiva
+            </h3>
             <div className="flex flex-wrap justify-center gap-4">
               <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 w-20 sm:w-24 md:w-32 shadow-lg border border-red-200">
-                <div className="text-3xl font-bold text-red-600">{countdown.days}</div>
+                <div className="text-3xl font-bold text-red-600">
+                  {countdown.days}
+                </div>
                 <div className="text-xs text-red-800">DIAS</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 w-20 sm:w-24 md:w-32 shadow-lg border border-red-200">
-                <div className="text-3xl font-bold text-red-600">{countdown.hours}</div>
+                <div className="text-3xl font-bold text-red-600">
+                  {countdown.hours}
+                </div>
                 <div className="text-xs text-red-800">HORAS</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 w-20 sm:w-24 md:w-32 shadow-lg border border-red-200">
-                <div className="text-3xl font-bold text-red-600">{countdown.minutes}</div>
+                <div className="text-3xl font-bold text-red-600">
+                  {countdown.minutes}
+                </div>
                 <div className="text-xs text-red-800">MINUTOS</div>
               </div>
               <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3 w-24 md:w-32 shadow-lg border border-red-200">
-                <div className="text-3xl font-bold text-red-600">{countdown.seconds}</div>
+                <div className="text-3xl font-bold text-red-600">
+                  {countdown.seconds}
+                </div>
                 <div className="text-xs text-red-800">SEGUNDOS</div>
               </div>
             </div>
@@ -156,18 +183,18 @@ export default function Home() {
         </div>
       </section>
 
-       {/* Scroll indicator */}
-       {showScrollIndicator && (
-          <div
-            className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
-            onClick={scrollToEvents}
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-red-600 text-sm mb-2">Veja mais</span>
-              <ChevronDown className="h-6 w-6 text-red-600" />
-            </div>
+      {/* Scroll indicator */}
+      {showScrollIndicator && (
+        <div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer"
+          onClick={scrollToEvents}
+        >
+          <div className="flex flex-col items-center">
+            <span className="text-red-600 text-sm mb-2">Veja mais</span>
+            <ChevronDown className="h-6 w-6 text-red-600" />
           </div>
-        )}
+        </div>
+      )}
 
       {/* Events Section */}
       <section className="py-16 px-4 bg-gradient-to-r from-orange-50 to-amber-50">
@@ -206,14 +233,18 @@ export default function Home() {
                     R. Santa Rita, 857 - Siqueira, Fortaleza - CE
                   </Link>
                 </div>
-                <p className="text-gray-700">Momento especial de consagração e preparação espiritual para o dia.</p>
+                <p className="text-gray-700">
+                  Momento especial de consagração e preparação espiritual para o
+                  dia.
+                </p>
                 <div className="flex items-center justify-center text-center mt-6">
                   <a
                     href="/consagracao.ics"
                     download="Consagração.ics"
                     className="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 transition-colors duration-300 flex items-center"
                   >
-                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao Calendário
+                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao
+                    Calendário
                   </a>
                 </div>
               </CardContent>
@@ -226,8 +257,10 @@ export default function Home() {
                 </div>
               </div>
               <div className="h-40 bg-gradient-to-r from-red-600 to-orange-500 flex items-center justify-center">
-                <h3 className="text-2xl font-bold text-white">Tarde de Avivamento</h3>
-              </div> 
+                <h3 className="text-2xl font-bold text-white">
+                  Tarde de Avivamento
+                </h3>
+              </div>
               <CardContent className="p-6">
                 <div className="flex items-center mb-4 text-red-700">
                   <Calendar className="mr-2 h-5 w-5" />
@@ -248,14 +281,18 @@ export default function Home() {
                     R. Santa Rita, 857 - Siqueira, Fortaleza - CE
                   </Link>
                 </div>
-                <p className="text-gray-700">Venha experimentar uma tarde de renovação espiritual e avivamento!</p>
+                <p className="text-gray-700">
+                  Venha experimentar uma tarde de renovação espiritual e
+                  avivamento!
+                </p>
                 <div className="flex items-center justify-center text-center mt-6">
                   <a
                     href="/avivamento.ics"
                     download="Tarde_de_Avivamento.ics"
                     className="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 transition-colors duration-300 flex items-center"
                   >
-                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao Calendário
+                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao
+                    Calendário
                   </a>
                 </div>
               </CardContent>
@@ -268,7 +305,9 @@ export default function Home() {
                 </div>
               </div>
               <div className="h-40 bg-gradient-to-r from-amber-500 to-orange-400 flex items-center justify-center">
-                <h3 className="text-2xl font-bold text-white">Culto da Juventude TC</h3>
+                <h3 className="text-2xl font-bold text-white">
+                  Culto da Juventude TC
+                </h3>
               </div>
               <CardContent className="p-6">
                 <div className="flex items-center mb-4 text-amber-700">
@@ -290,27 +329,35 @@ export default function Home() {
                     R. Santa Rita, 857 - Siqueira, Fortaleza - CE
                   </Link>
                 </div>
-                <p className="text-gray-700">Um culto especial para a juventude com muita música e comunhão!</p>
+                <p className="text-gray-700">
+                  Um culto especial para a juventude com muita música e
+                  comunhão!
+                </p>
                 <div className="flex items-center justify-center text-center mt-6">
                   <a
                     href="/culto.ics"
                     download="Culto.ics"
                     className="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 transition-colors duration-300 flex items-center"
                   >
-                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao Calendário
+                    <Calendar className="mr-2 h-4 w-4" /> Adicionar ao
+                    Calendário
                   </a>
                 </div>
               </CardContent>
             </Card>
           </div>
           <div className="text-center mt-10 text-xl text-red-700 font-medium">
-            Não fique de fora! Marque no calendário, convide seus amigos e venha fazer parte desse culto poderoso! 🔥
+            Não fique de fora! Marque no calendário, convide seus amigos e venha
+            fazer parte desse culto poderoso! 🔥
           </div>
         </div>
       </section>
 
       {/* Playlist Section */}
-      <section id="playlist" className="py-16 px-4 bg-gradient-to-b from-red-50 to-amber-50 relative overflow-hidden">
+      <section
+        id="playlist"
+        className="py-16 px-4 bg-gradient-to-b from-red-50 to-amber-50 relative overflow-hidden"
+      >
         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-red-100 to-transparent"></div>
 
         {/* Animated notes */}
@@ -362,11 +409,18 @@ export default function Home() {
               ></iframe>
             </div>
             <div className="mt-6 text-center">
-              <p className="text-gray-600 mb-4">Prepare seu coração com estas músicas antes do evento!</p>
+              <p className="text-gray-600 mb-4">
+                Prepare seu coração com estas músicas antes do evento!
+              </p>
               <Button
                 variant="outline"
                 className="border-red-600 text-red-600 hover:bg-red-100"
-                onClick={() => window.open("https://open.spotify.com/playlist/0HAc3NDuAprbKUBLF3BW2j", "_blank")}
+                onClick={() =>
+                  window.open(
+                    "https://open.spotify.com/playlist/0HAc3NDuAprbKUBLF3BW2j",
+                    "_blank"
+                  )
+                }
               >
                 <Music className="mr-2 h-4 w-4" /> Abrir no Spotify
               </Button>
@@ -438,7 +492,7 @@ export default function Home() {
               <Instagram className="mr-2 h-8 w-8" /> Instagram
             </Button>
           </Link>
-         
+
           <p className="mb-4">© 2025 - Todos os direitos reservados</p>
           <p>
             adtemplocentral7setembro1@gmail.com
